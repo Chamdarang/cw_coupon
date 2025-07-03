@@ -57,7 +57,7 @@
 | start_time   | DATETIME     | -     | 캠페인 시작 시각 |
 | total_coupons| INT          | -     | 캠페인 총 발급 수량 |
 
----
+
 
 ### coupons
 
