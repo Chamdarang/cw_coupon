@@ -45,6 +45,9 @@
 - **테스트 클라이언트**
     - `./cmd/client/client.go` (기능 작동 테스트)
     - `./cmd/client/client_mul.go` (동시성 테스트)
+- **비즈니스 로직**: `./internal/server/server.go`  
+- **DB 연동**: `./internal/store/db_store.go`  
+- **Redis 연동**: `./internal/store/redis_store.go`  
 
 ## DB 스키마
 
