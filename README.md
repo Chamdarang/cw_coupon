@@ -71,3 +71,20 @@
 - `coupon_code`는 `campaign_id`와 함께 UNIQUE 설정
   - 쿠폰 코드 단독으로 UNIQUE 처리하면 캠페인이 늘어날수록 코드 관리와 생성의 난이도가 급격히 상승
   - `campaign_id, coupon_code` 조합 인덱스로 인해 캠페인별 쿠폰 코드 조회 시 인덱스 탐색 비용이 낮음
+
+
+## 동시성 및 수평 확장 설계
+
+- **동시성 처리**
+  - Redis Lua 스크립트를 통해 쿠폰 수량 체크 + INCR을 atomic하게 처리하여 race condition 방지
+  - 클라이언트 부하 테스트(client_mul.go)로 동시성 상황 시뮬레이션
+
+- **현재 수평 확장 대응**
+  - 서버는 stateless 구조로 여러 인스턴스 동시 운영 가능
+  - Redis atomic counter로 race-free 상태 관리
+  - DB는 단순 기록용으로 insert 충돌 최소화
+
+- **추가 수평 확장을 위한 고려**
+  - Redis Cluster 구성
+  - DB 샤딩 또는 파티셔닝
+  - 서버 오토스케일링
